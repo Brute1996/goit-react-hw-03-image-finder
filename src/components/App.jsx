@@ -21,7 +21,7 @@ export class App extends Component  {
     if (prevState.page !== this.state.page ||
         prevState.imageName !== this.state.imageName) {
         
-        this.setState({ loading: true});
+        this.setState({ loading: true });
 
         getImages(this.state.imageName, this.state.page)
           .then(response => {
@@ -37,8 +37,12 @@ export class App extends Component  {
   handleFormSubmit = imageName => {
     this.setState({
       imageName,
-      page: 1,
-      gallery: [],
+    });
+    
+    this.setState(prevState => {
+      if (prevState.imageName !== this.state.imageName) {
+        return ({ gallery: [], page: 1 })
+      };
     });
   };
 
