@@ -4,14 +4,15 @@ export const Loader = ({loading}) => {
     return (
         <div>
             <Oval
-            height={80}
-            width={80}
-            color="#4fa94d"
+            height={280}
+            width={280}
+            color="#1c0792"
             visible={loading}
             ariaLabel='oval-loading'
-            secondaryColor="#4fa94d"
+            secondaryColor="#2235a3"
             strokeWidth={2}
-            strokeWidthSecondary={2}
+                strokeWidthSecondary={2}
+                wrapperClass="Loader"
             />
         </div>
     );

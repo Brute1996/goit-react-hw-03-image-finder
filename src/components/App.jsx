@@ -14,6 +14,7 @@ export class App extends Component  {
     gallery: [],
     loading: false,
     page: 1,
+    totalResult: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -23,9 +24,9 @@ export class App extends Component  {
         this.setState({ loading: true});
 
         getImages(this.state.imageName, this.state.page)
-            .then(response => {
+          .then(response => {
                 if (response.data.hits.length !== 0) {
-                    this.setState({ gallery: [...this.state.gallery, ...response.data.hits] })
+                    this.setState({ gallery: [...this.state.gallery, ...response.data.hits], totalResult: response.data.total })
                 }
             })
             .catch(error => console.log(error))
@@ -54,7 +55,7 @@ export class App extends Component  {
           gallery={this.state.gallery}
           page={this.state.page}/>
         <Loader loading={this.state.loading}/>
-        {this.state.gallery.length >= 1 && <LoadMoreButton getNextPage={this.getNextPage} />}
+        {this.state.gallery.length >= 1 && this.state.gallery.length < this.state.totalResult &&  <LoadMoreButton getNextPage={this.getNextPage} />}
       </div>
     );
   };
