@@ -1,5 +1,7 @@
 import { Modal } from "components/Modal/Modal";
 import { Component } from "react";
+import PropTypes from 'prop-types';
+import { ImageGallerItemWrapper } from "./ImageGalleryItemWrapper.styled";
 
 export class ImageGalleryItem extends Component {
     state = {
@@ -14,12 +16,17 @@ export class ImageGalleryItem extends Component {
     render() {
         const { imageUrl, tags, largeImageURL } = this.props
         return (
-            <li className="ImageGalleryItem" onClick={()=>this.toggleModal()}>
+            <ImageGallerItemWrapper className="ImageGalleryItem" onClick={()=>this.toggleModal()}>
                 <img className="ImageGalleryItem-image" src={imageUrl} alt={tags} />
-                {this.state.modalActive && <Modal largeImageURL={largeImageURL} closeModalByEsc={this.toggleModal} />}
-            </li>
+                {this.state.modalActive && <Modal largeImageURL={largeImageURL} toggleModal={this.toggleModal} />}
+            </ImageGallerItemWrapper>
 
         );
     };
-
 };
+
+ImageGalleryItem.propTypes = {
+    imageUrl: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+}

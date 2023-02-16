@@ -1,15 +1,13 @@
+import PropTypes from 'prop-types';
+
+
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
-import { Component } from "react";
+import { ImageGalleryWrapper } from './ImageGallery.styled';
 
+export const ImageGallery = ({gallery}) => {
 
-export class ImageGallery extends Component {
-
-
-    render() {
-        const { gallery } = this.props;
         return (
-            <div>
-                <ul className="ImageGallery">
+                <ImageGalleryWrapper className="ImageGallery">
                     {gallery.map(({ webformatURL, tags, id, largeImageURL }) =>
                         <ImageGalleryItem
                             key={id}
@@ -17,8 +15,17 @@ export class ImageGallery extends Component {
                             tags={tags}
                             largeImageURL={largeImageURL}
                             />)}
-                </ul>
-            </div>
+                </ImageGalleryWrapper>
         );
-    };
 };
+
+ImageGallery.propTypes = {
+    gallery: PropTypes.arrayOf(
+        PropTypes.shape({
+            webformatURL: PropTypes.string.isRequired,
+            tags: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+            largeImageURL: PropTypes.string.isRequired,
+        }).isRequired,
+    ).isRequired,
+}

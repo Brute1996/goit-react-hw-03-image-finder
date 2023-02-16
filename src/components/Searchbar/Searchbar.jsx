@@ -1,22 +1,27 @@
 import { Component } from "react";
+import { ImSearch } from "react-icons/im"
+import PropTypes from 'prop-types';
+import { SearchbarWrapper } from "./SearchbarWrapper.styled";
 
 
 export class SearchBar extends Component {
     state = {
         imageName: '',
-        
     }
 
-
     handleSubmit = (e) => {
+
+        const { imageName } = this.state
+        const { onSubmit } = this.props
+ 
         e.preventDefault();
 
-        if (this.state.imageName.trim() === '') {
+        if (imageName.trim() === '') {
             alert('Enter something')
             return
         }
 
-        this.props.onSubmit(this.state.imageName)
+        onSubmit(imageName)
         
         this.setState({
             imageName: '',
@@ -33,16 +38,18 @@ export class SearchBar extends Component {
 
 
     render() {
+        const { imageName } = this.state;
+
         return (
-            <header className="Searchbar">
+            <SearchbarWrapper>
                 <form className="SearchForm" onSubmit={this.handleSubmit}>
                     <button type="submit" className="SearchForm-button">
-                        <span className="SearchForm-button-label">Search</span>
+                        <span className="SearchForm-button-label"><ImSearch/></span>
                     </button>
 
                     <input
                         onChange={this.handleNameChange}
-                        value={this.state.imageName}
+                        value={imageName}
                         className="SearchForm-input"
                         type="text"
                         autoComplete="off"
@@ -50,8 +57,12 @@ export class SearchBar extends Component {
                         placeholder="Search images and photos"
                     />
                 </form>
-            </header>
+            </SearchbarWrapper>
         );
     };
     
 };
+
+SearchBar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+}

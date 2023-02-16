@@ -26,11 +26,13 @@ export class App extends Component  {
         getImages(this.state.imageName, this.state.page)
           .then(response => {
                 if (response.data.hits.length !== 0) {
-                    this.setState({ gallery: [...this.state.gallery, ...response.data.hits], totalResult: response.data.total })
+                  this.setState({ gallery: [...this.state.gallery, ...response.data.hits], totalResult: response.data.total })
                 }
             })
             .catch(error => console.log(error))
-            .finally(() => this.setState({ loading: false }));
+          .finally(() => this.setState({ loading: false })
+
+          );
         }; 
   };
 
@@ -46,9 +48,17 @@ export class App extends Component  {
     });
   };
 
-    getNextPage = () => {
-      this.setState((prevState) => ({ page: prevState.page + 1 }));
+  getNextPage = () => {
+    this.setState((prevState) => ({ page: prevState.page + 1 }));
+    
+    setTimeout(() => window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    }), 500)
+
+
   };
+
 
 
   render() {
